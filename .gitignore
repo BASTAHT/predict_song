@@ -1,0 +1,8 @@
+__pycache__/
+
+*.pickle
+*.pyc
+.cache-*
+.idea
+.vscode
+.env
