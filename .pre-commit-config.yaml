@@ -11,3 +11,8 @@ repos:
           - flake8-absolute-import
           - flake8-black
           - flake8-docstrings
+  - repo: https://github.com/pycqa/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        name: isort (python)
