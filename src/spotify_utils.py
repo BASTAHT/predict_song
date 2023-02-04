@@ -1,7 +1,7 @@
 import pandas as pd
 import spotipy
 
-import src.utils.parameters as p
+from . import parameters as p
 
 
 def auth_spotify(

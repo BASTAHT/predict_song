@@ -1,7 +1,7 @@
 import pandas as pd
 from imblearn.over_sampling import SMOTE
 
-import src.utils.parameters as p
+from . import parameters as p
 
 
 def combine_datasets(

@@ -3,23 +3,23 @@ import pickle
 
 from dotenv import load_dotenv
 
-import src.utils.parameters as p
-from src.utils import spotify_utils
+import src.parameters as p
+from src import spotify_utils
 
 # Load secrets
 load_dotenv()
 
 # Authenticate spotify
 connection = spotify_utils.auth_spotify(
-    client_id=os.getenv("CLIENT_ID"),
-    client_secret=os.getenv("CLIENT_SECRET"),
-    redirect_uri=os.getenv("REDIRECT_URI"),
-    username=os.getenv("USERNAME"),
+    client_id=os.environ["CLIENT_ID"],
+    client_secret=os.environ["CLIENT_SECRET"],
+    redirect_uri=os.environ["REDIRECT_URI"],
+    username=os.environ["USERNAME"],
 )
 
 # Load the playlist to classify
 classify_list_data = spotify_utils.get_playlist_data(
-    connection=connection, playlist_id=os.getenv("CLASSIFY_PLAYLIST_ID"), liked=False
+    connection=connection, playlist_id=os.environ["CLASSIFY_PLAYLIST_ID"], liked=False
 )
 
 # Load and apply the model
@@ -37,12 +37,12 @@ predict_disliked = classify_list_data[~filter_liked][["artist", "title", "predic
 
 # Write the songs predicted as liked to output playlist
 spotify_utils.replace_playlist(
-    connection, os.getenv("PREDICTED_LIKE_ID"), list(predict_liked.index)
+    connection, os.environ["PREDICTED_LIKE_ID"], list(predict_liked.index)
 )
 
 # write the songs predicted as liked to output playlist
 spotify_utils.replace_playlist(
-    connection, os.getenv("PREDICTED_DISLIKE_ID"), list(predict_disliked.index)
+    connection, os.environ["PREDICTED_DISLIKE_ID"], list(predict_disliked.index)
 )
 
 # Print the aggregate results

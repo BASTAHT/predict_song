@@ -4,28 +4,28 @@ import pickle
 from dotenv import load_dotenv
 from interpret.glassbox import ExplainableBoostingClassifier
 
-import src.utils.parameters as p
-from src.utils import preprocessing, spotify_utils
+import src.parameters as p
+from src import preprocessing, spotify_utils
 
 # Load secrets
 load_dotenv()
 
 # Authenticate spotify
 connection = spotify_utils.auth_spotify(
-    client_id=os.getenv("CLIENT_ID"),
-    client_secret=os.getenv("CLIENT_SECRET"),
-    redirect_uri=os.getenv("REDIRECT_URI"),
-    username=os.getenv("USERNAME"),
+    client_id=os.environ["CLIENT_ID"],
+    client_secret=os.environ["CLIENT_SECRET"],
+    redirect_uri=os.environ["REDIRECT_URI"],
+    username=os.environ["USERNAME"],
 )
 
 # Load the liked and disliked dataset
 liked_list_data = spotify_utils.get_playlist_data(
-    connection=connection, playlist_id=os.getenv("TRAIN_LIKE_PLAYLIST_ID"), liked=True
+    connection=connection, playlist_id=os.environ["TRAIN_LIKE_PLAYLIST_ID"], liked=True
 )
 
 disliked_list_data = spotify_utils.get_playlist_data(
     connection=connection,
-    playlist_id=os.getenv("TRAIN_DISLIKE_PLAYLIST_ID"),
+    playlist_id=os.environ["TRAIN_DISLIKE_PLAYLIST_ID"],
     liked=False,
 )
 
