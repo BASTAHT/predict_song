@@ -65,6 +65,7 @@ def get_playlist_data(
             except:
                 print(f"song {track} can not be found")
         songdata = connection.audio_features(ids)
+        songdata = filter(None, songdata)
         df_data = pd.DataFrame(songdata).set_index("id")
         df_info = pd.DataFrame(
             list(zip(ids, artist, song)), columns=["id", "artist", "title"]
