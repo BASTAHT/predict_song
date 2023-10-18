@@ -32,6 +32,10 @@ def oversample(
                                 Default 1.0 leads to the same number of minority class as majority class samples.
     """
     oversample = SMOTE(k_neighbors=k_neighbours, sampling_strategy=sampling_strategy)
-    x_smote, y_smote = oversample.fit_resample(data[features], data[p.COLUMN_LIKED])
-
-    return x_smote, y_smote
+    try:
+        return oversample.fit_resample(data[features], data[p.COLUMN_LIKED])
+    except ValueError:
+        print(
+            "The specified ratio would require samples to be removed: skipping oversampling"
+        )
+        return data[features], data[p.COLUMN_LIKED]
